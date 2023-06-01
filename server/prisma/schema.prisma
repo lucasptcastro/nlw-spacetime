@@ -1,0 +1,18 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// @id => indica ao prisma que o campo "id" será um id e primary key da tabela
+// @default(uuid()) => indica que será um Universal Unique ID (um valor de id único universal. Ex.:  19ACD37-CD36-429B-A79C-BF16499B7F4)
+model User {
+  id   String @id @default(uuid())
+  name String
+}
