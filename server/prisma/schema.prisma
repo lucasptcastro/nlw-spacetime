@@ -11,8 +11,24 @@ datasource db {
 }
 
 // @id => indica ao prisma que o campo "id" será um id e primary key da tabela
-// @default(uuid()) => indica que será um Universal Unique ID (um valor de id único universal. Ex.:  19ACD37-CD36-429B-A79C-BF16499B7F4)
+// @default(uuid()) => indica que o valor padrão será um Universal Unique ID (um valor de id único universal. Ex.:  19ACD37-CD36-429B-A79C-BF16499B7F4)
 model User {
-  id   String @id @default(uuid())
-  name String
+  id        String @id @default(uuid())
+  githubId  Int    @unique
+  name      String
+  login     String
+  avatarUrl String
+
+  Memory Memory[]
+}
+
+model Memory {
+  id        String   @id @default(uuid())
+  userId    String // foreign key
+  coverUrl  String
+  content   String
+  isPublic  Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id]) // relação da tabela "Memory" com a tabela "User"
 }
