@@ -2,3 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+// Trata a fonte do navegador, deixando-a um pouco mais fina, melhorando a legibilidade
+body {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
