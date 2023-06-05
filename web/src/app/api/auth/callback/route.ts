@@ -6,6 +6,9 @@ export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const code = searchParams.get("code");
 
+  // coleta o token redirectTo, se existir.
+  const redirectTo = request.cookies.get("redirectTo")?.value;
+
   // faz uma requisição para o back enviando o code do github
   const registerResponse = await api.post("/register", {
     code,
@@ -13,9 +16,9 @@ export async function GET(request: NextRequest) {
 
   const { token } = registerResponse.data;
 
-  // define a url que o usuário será redirecionado
-  // após fazer login
-  const redirectURL = new URL("/", request.url);
+  // define a url que o usuário será redirecionado após fazer login
+  // se existir redirectTo será redirecionado para redirectTo. senão, para a home
+  const redirectURL = redirectTo ?? new URL("/", request.url);
 
   // define o tempo de expiração dos cookies para 30 dias
   const cookieExpiresInSeconds = 60 * 60 * 24 * 30;
